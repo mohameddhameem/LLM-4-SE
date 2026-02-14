@@ -1,0 +1,70 @@
+{
+	"name": "City of Agents - Python ML/DL Development",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+
+	// Configure tool-specific properties
+	"customizations": {
+		// VS Code specific settings
+		"vscode": {
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.languageServer": "Pylance",
+				"python.linting.enabled": true,
+				"python.linting.pylintEnabled": true,
+				"python.terminal.activateEnvironment": true,
+				"editor.formatOnSave": true
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-toolsai.jupyter",
+				"ms-toolsai.jupyter-renderers"
+			]
+		}
+	},
+
+	// IntelliJ IDEA will recognize these settings
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+
+	// Mount the project root
+	"workspaceFolder": "/workspace",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally
+	"forwardPorts": [8888, 6006],
+	"portsAttributes": {
+		"8888": {
+			"label": "Jupyter",
+			"onAutoForward": "notify"
+		},
+		"6006": {
+			"label": "TensorBoard",
+			"onAutoForward": "silent"
+		}
+	},
+
+	// Set environment variables
+	"containerEnv": {
+		"PYTHONUNBUFFERED": "1"
+	},
+
+	// Keep container running
+	"stdin": true,
+	"tty": true,
+
+	// Note: Install Python dependencies manually after container starts:
+	// pip install --upgrade pip && pip install -r .devcontainer/requirements-cpu.txt
+	// This avoids container crash if installation fails
+
+	// Keep container running for IntelliJ compatibility
+	"overrideCommand": false,
+
+	// Run as the default user (root) to avoid permission issues
+	"remoteUser": "root"
+}
